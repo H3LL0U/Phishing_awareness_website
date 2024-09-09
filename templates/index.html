@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title> If you are here you've clicked on a phishing link</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, minimum-scale=0.8">
+    <meta name="author" content="H3LL_0U">
+
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Warning!</h1>
+        </header>
+        <main>
+            <p>You are one of <span style="color: red;">{{visited_amount}}</span> people who have clicked on a malicious
+                link. This site is designed to
+                warn you about phishing attempts.</p>
+        </main>
+        <footer>
+            <p>Be cautious and protect your personal information. For more information, visit <a
+                    href="https://www.consumer.ftc.gov/articles/how-recognize-and-avoid-phishing-scams"
+                    target="_blank">FTC's guide on phishing scams</a>.</p>
+            <p>If you wish to stop receiving test phishing emails, please reply with "unsubscribe" to the email that
+                sent you this link.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
