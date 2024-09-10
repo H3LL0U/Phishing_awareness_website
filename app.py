@@ -1,5 +1,6 @@
 
 import sqlite_functions as sql
+import os
 from flask import Flask, render_template , request, make_response
 import dotenv
 
@@ -13,8 +14,9 @@ PATH_TO_DB=path/to/db.db
 OBFUSCATION_STRING=SomeObfuscationString
 
 '''
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 dotenv.load_dotenv()
-config = dotenv.dotenv_values()
+config = dict(os.environ)
 
 
 
