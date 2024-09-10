@@ -1,1 +1,4 @@
 people.json
+.gitignore
+visited.db
+.env
