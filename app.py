@@ -6,6 +6,13 @@ import dotenv
 app = Flask(__name__)
 
 #read from .env file
+'''
+
+In order for the app to function properly the .env file should contain the following variables:
+PATH_TO_DB=path/to/db.db
+OBFUSCATION_STRING=SomeObfuscationString
+
+'''
 dotenv.load_dotenv()
 config = dotenv.dotenv_values()
 
@@ -37,6 +44,7 @@ def home ():
 
 
 if __name__ =="__main__":
+    #creates a .db file if it is not created yet in the speciefied path by the .env file
     with open(config["PATH_TO_DB"], "a") as db:
         pass
     
