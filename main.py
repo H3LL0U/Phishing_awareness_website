@@ -1,5 +1,7 @@
-import json
 
+
+import json
+import os
 from flask import Flask, render_template , request
 
 
@@ -10,7 +12,7 @@ path_to_json = "./people.json"
 def increment_visited_json()->None:
     with open(path_to_json , "r") as json_file:
         data = json.load(json_file)
-        
+    
         
     data["visited_amount"]+=1
     with open(path_to_json, "w") as json_file:
@@ -50,4 +52,10 @@ def home ():
 
 
 if __name__ =="__main__":
+
+    if not os.path.exists(path_to_json):
+        with open(path_to_json, 'w') as json_file:
+            json_file.write('{"visited_amount": 1,"visited_ips": []}')
+
+
     app.run(host="0.0.0.0",port=5000, debug=True)
