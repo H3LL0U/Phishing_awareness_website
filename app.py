@@ -1,9 +1,8 @@
 
-import sqlite_functions as sql
 import os
 from flask import Flask, render_template , request, make_response
 import dotenv
-
+import database_functions as db_func
 app = Flask(__name__)
 
 #read from .env file
@@ -25,18 +24,20 @@ config = dict(os.environ)
 
 
 
+
 @app.route("/", methods = ["POST","GET"])
 def home ():
     
     current_cookie = request.cookies.get("visited")
-    visited_amount = sql.get_max_id(config["PATH_TO_DB"],"visited")
+    visited_amount = db_func.get_max_id(connection_db,"visited")
+    
     obfuscated_cookie = str(hash(config["OBFUSCATION_STRING"]+str(visited_amount)))
     #default response
     response = render_template("index.html", root_name = "/",visited_amount = visited_amount)
-    set_cookie = None
-    if not sql.get_from_database(config["PATH_TO_DB"],"visited",cookie=obfuscated_cookie) and not sql.get_from_database(config["PATH_TO_DB"],"visited", cookie=current_cookie):
-        print("im new!")
-        sql.add_to_the_database(config["PATH_TO_DB"],"visited",cookie=obfuscated_cookie)
+    
+    if not db_func.get_from_database(connection_db,"visited",cookie=obfuscated_cookie) and not db_func.get_from_database(connection_db,"visited", cookie=current_cookie):
+        
+        db_func.add_to_the_database(connection_db,"visited",cookie=obfuscated_cookie)
 
         visited_amount+1
         response = make_response(response)
@@ -46,9 +47,21 @@ def home ():
 
 
 if __name__ =="__main__":
+
+    '''
+    Connects to a remote database to store cookies and the amount of people who have visited the website
+    '''
+    connection_db = db_func.connect_to_database(
+        host=config["DATABASE_HOST"],
+        password=config["DATABASE_PASSWORD"],
+        database=config["DATABASE_NAME"],
+        port= int(config["DATABASE_PORT"]),
+        user=config["DATABASE_USER"]
+        )
+    db_func.create_table(connection=connection_db)
+
     #creates a .db file if it is not created yet in the speciefied path by the .env file
-    with open(config["PATH_TO_DB"], "a") as db:
-        pass
+    
     
 
 

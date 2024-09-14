@@ -2,3 +2,4 @@ people.json
 .gitignore
 visited.db
 .env
+__pycache__
