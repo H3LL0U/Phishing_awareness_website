@@ -18,7 +18,18 @@ dotenv.load_dotenv()
 config = dict(os.environ)
 
 
+connection_db = db_func.connect_to_database(
+    host=config["DATABASE_HOST"],
+    password=config["DATABASE_PASSWORD"],
+    database=config["DATABASE_NAME"],
+    port= int(config["DATABASE_PORT"]),
+    user=config["DATABASE_USER"]
+    )
 
+'''
+    Connects to a remote database to store cookies and the amount of people who have visited the website
+'''
+db_func.create_table(connection=connection_db)
 
 
 
@@ -47,22 +58,6 @@ def home ():
 
 
 if __name__ =="__main__":
-
-    '''
-    Connects to a remote database to store cookies and the amount of people who have visited the website
-    '''
-    connection_db = db_func.connect_to_database(
-        host=config["DATABASE_HOST"],
-        password=config["DATABASE_PASSWORD"],
-        database=config["DATABASE_NAME"],
-        port= int(config["DATABASE_PORT"]),
-        user=config["DATABASE_USER"]
-        )
-    db_func.create_table(connection=connection_db)
-
-    #creates a .db file if it is not created yet in the speciefied path by the .env file
-    
-    
 
 
     app.run(host="0.0.0.0",port=5000, debug=True)
