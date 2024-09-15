@@ -2,9 +2,9 @@ import mysql.connector
 from mysql.connector import Error, MySQLConnection
 import sqlite3
 def connect_to_database(host,user,password,database,port):
-    try:
+    
         
-        connection = mysql.connector.connect(
+    connection = mysql.connector.connect(
             host=host,
             user=user,
             password=password,
@@ -13,10 +13,9 @@ def connect_to_database(host,user,password,database,port):
             
         )
 
-        return connection
+    return connection
 
-    except Exception as e:
-        print(e)
+
 
 
 
