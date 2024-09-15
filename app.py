@@ -5,6 +5,7 @@ import dotenv
 import mongodb_func as db_func
 app = Flask(__name__)
 import pymongo
+import certifi
 #read from .env file
 '''
 
@@ -28,7 +29,8 @@ connection_db = None
 
 def setup():
     global connection_db
-    connection_db = pymongo.MongoClient(config["MONGO_DB_LINK"],maxPoolSize=None)
+    ca = certifi.where()
+    connection_db = pymongo.MongoClient(config["MONGO_DB_LINK"],maxPoolSize=None,tlsCAFile=ca)
 
 
 
