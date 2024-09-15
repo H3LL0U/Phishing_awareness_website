@@ -4,7 +4,7 @@ from flask import Flask, render_template , request, make_response
 import dotenv
 import mongodb_func as db_func
 app = Flask(__name__)
-
+import pymongo
 #read from .env file
 '''
 
@@ -22,7 +22,7 @@ config = dict(os.environ)
 '''
     Connects to a remote database to store cookies and the amount of people who have visited the website
 '''
-connection_db = config["MONGO_DB_LINK"]
+connection_db = pymongo.MongoClient(config["MONGO_DB_LINK"])
 
 
 
@@ -54,4 +54,4 @@ if __name__ =="__main__":
 
 
     app.run(host="0.0.0.0",port=5000, debug=True)
-    
+    connection_db.close()

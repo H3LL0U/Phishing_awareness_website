@@ -2,20 +2,19 @@
 import pymongo
 from pymongo import MongoClient
 
-def get_max_id(mongo_uri, db_name, collection_name):
-    client = MongoClient(mongo_uri)
+def get_max_id(mongo_client:MongoClient, db_name, collection_name):
+    client = mongo_client
     db = client[db_name]
     collection = db[collection_name]
 
     total_documents = collection.count_documents({}) 
 
-    client.close()
 
     return total_documents
 
-def check_value_exists(mongo_uri, db_name, collection_name, field, value):
+def check_value_exists(mongo_client:MongoClient, db_name, collection_name, field, value):
 
-    client = MongoClient(mongo_uri)
+    client = mongo_client
     db = client[db_name]
     collection = db[collection_name]
 
@@ -24,11 +23,10 @@ def check_value_exists(mongo_uri, db_name, collection_name, field, value):
     
     document = collection.find_one(query)
 
-    client.close()
 
     return document is not None
-def insert_if_cookie_unique(mongo_uri, db_name, collection_name, cookie_value):
-    client = MongoClient(mongo_uri)
+def insert_if_cookie_unique(mongo_client, db_name, collection_name, cookie_value):
+    client = mongo_client
     db = client[db_name]
     collection = db[collection_name]
 
@@ -38,7 +36,6 @@ def insert_if_cookie_unique(mongo_uri, db_name, collection_name, cookie_value):
     if existing_document:
 
         
-        client.close()
         return False  
 
     cookie = {}
@@ -46,7 +43,7 @@ def insert_if_cookie_unique(mongo_uri, db_name, collection_name, cookie_value):
     collection.insert_one(cookie)
 
 
-    client.close()
+
 
     
     return True  
