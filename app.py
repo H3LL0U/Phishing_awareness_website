@@ -22,16 +22,20 @@ config = dict(os.environ)
 '''
     Connects to a remote database to store cookies and the amount of people who have visited the website
 '''
-connection_db = pymongo.MongoClient(config["MONGO_DB_LINK"],maxPoolSize=None)
+
+connection_db = None
 
 
-
+def setup():
+    global connection_db
+    connection_db = pymongo.MongoClient(config["MONGO_DB_LINK"],maxPoolSize=None)
 
 
 
 @app.route("/", methods = ["POST","GET"])
 def home ():
-    
+    if connection_db is None:
+        setup()
     current_cookie = request.cookies.get("visited")
     visited_amount = db_func.get_max_id(connection_db,"Emails","Cookies")
     
