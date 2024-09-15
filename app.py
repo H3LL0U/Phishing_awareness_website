@@ -22,7 +22,7 @@ config = dict(os.environ)
 '''
     Connects to a remote database to store cookies and the amount of people who have visited the website
 '''
-connection_db = pymongo.MongoClient(config["MONGO_DB_LINK"])
+connection_db = pymongo.MongoClient(config["MONGO_DB_LINK"],maxPoolSize=None)
 
 
 
