@@ -2,9 +2,10 @@ import dotenv
 from cryptography.fernet import Fernet
 import base64
 import hashlib
-
+import os
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 dotenv.load_dotenv()
-config=dotenv.dotenv_values()
+config = dict(os.environ)
 def convert_string_to_urlsafe_base64(string_to_encode:str):
     
     hash_value = hashlib.sha256(string_to_encode.encode()).digest()

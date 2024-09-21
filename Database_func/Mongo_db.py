@@ -29,7 +29,7 @@ def get_subscribed_emails(mongo_client:MongoClient, db_name="Emails", collection
 
     
     return emails
-def get_emails(mongo_client:MongoClient, db_name="Emails", collection_name = "Emails",auto_decrypt = True, query = {"encrypted":False}):
+def get_emails(mongo_client:MongoClient, db_name="Emails", collection_name = "Emails",auto_decrypt = True, query=None):
     '''
     returns a tupple with (id, decrypted_emails)
     '''
@@ -38,8 +38,8 @@ def get_emails(mongo_client:MongoClient, db_name="Emails", collection_name = "Em
     collection = db[collection_name]
 
     # Get unencrypted
-    
-    query = query
+    if query is None:
+        query = {"encrypted":False}
 
         
     documents = collection.find(query, {"_id": 1, "email": 1})
