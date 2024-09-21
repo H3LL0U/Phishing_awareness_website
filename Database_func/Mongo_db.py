@@ -337,5 +337,21 @@ def decrypt_values_in_db(connection:MongoClient,property_name:str = "email",db_n
         email_num+=1
     return email_num
 def get_visited_ammount(mongo_client:MongoClient, db_name:str, collection_name:str):
-    return len(get_emails(mongo_client,auto_decrypt=False,query={"encrypted":False,"visited":True}))
+    return len(get_emails(mongo_client,auto_decrypt=False,query={"encrypted":False,"visited":True},collection_name=collection_name,db_name=db_name,))
 
+def get_encrypted_version(connection:MongoClient,email:str,db_name = "Emails", collection_name = "Emails"):
+    '''
+    gets the encrypted version from the database if it exists
+    '''
+    client = connection
+
+    
+    db = client[db_name]
+    collection = db[collection_name]
+
+    email_id = get_id_of_an_email(connection,email,db_name=db_name,collection_name=collection_name)
+    
+    email = get_emails(client,db_name=db_name,collection_name=collection_name,auto_decrypt=False,query={"encrypted":False,"_id":email_id})
+    if email:
+        return email[0][1]
+    return None

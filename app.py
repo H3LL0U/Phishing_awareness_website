@@ -38,7 +38,7 @@ setup()
 
 @app.route("/", methods = ["POST","GET"])
 def home():
-    visited_amount = get_visited_ammount(connection_db,"Emails","Cookies")
+    visited_amount = get_visited_ammount(connection_db,"Emails","Emails")
     response = render_template("index.html", root_name = "/",visited_amount = visited_amount)
 
     return response
@@ -51,7 +51,19 @@ def link_redirect(encrypted_email):
     
     
     add_property_to_documents(connection_db,"visited",True,filter_query={"_id":email_id})
+    
+    response = make_response(render_template("login.html", root_name = "/"))
+    response.set_cookie("login",encrypted_email)
+    return response
+@app.route("/typed")
+def typed():
+    encrypted_email = request.cookies.get("login")
+    if encrypted_email is None:
+        return home()
+
+    add_property_to_documents(connection_db,"started_typing",True,filter_query={"email":encrypted_email})
     return home()
+
     
 
 if __name__ =="__main__":
