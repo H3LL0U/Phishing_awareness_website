@@ -3,3 +3,4 @@ people.json
 visited.db
 .env
 __pycache__
+.venv

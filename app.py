@@ -2,10 +2,12 @@
 import os
 from flask import Flask, render_template , request, make_response
 import dotenv
-import mongodb_func as db_func
+from Database_func import *
 app = Flask(__name__)
 import pymongo
 import certifi
+
+
 #read from .env file
 '''
 
@@ -32,29 +34,25 @@ def setup():
     ca = certifi.where()
     connection_db = pymongo.MongoClient(config["MONGO_DB_LINK"],maxPoolSize=None,tlsCAFile=ca)
 
-
+setup()
 
 @app.route("/", methods = ["POST","GET"])
-def home ():
-    if connection_db is None:
-        setup()
-    current_cookie = request.cookies.get("visited")
-    visited_amount = db_func.get_max_id(connection_db,"Emails","Cookies")
-    
-    obfuscated_cookie = str(hash(config["OBFUSCATION_STRING"]+str(visited_amount)))
-    #default response
+def home():
+    visited_amount = get_visited_ammount(connection_db,"Emails","Cookies")
     response = render_template("index.html", root_name = "/",visited_amount = visited_amount)
-    
-    if not db_func.check_value_exists(connection_db,"Emails","Cookies","cookie",obfuscated_cookie) and not db_func.check_value_exists(connection_db,"Emails","Cookies","cookie",current_cookie):
-        
-        db_func.insert_if_cookie_unique(connection_db,"Emails","Cookies",obfuscated_cookie)
 
-        visited_amount+1
-        response = make_response(response)
-        response.set_cookie("visited",obfuscated_cookie)
-        
     return response
-
+@app.route('/<path:encrypted_email>', methods=['GET'])
+def link_redirect(encrypted_email):
+    
+    email_id = get_id_of_an_email(connection_db,encrypted_email,auto_decrypt=False)
+    if email_id is None:
+        return home()
+    
+    
+    add_property_to_documents(connection_db,"visited",True,filter_query={"_id":email_id})
+    return home()
+    
 
 if __name__ =="__main__":
 
