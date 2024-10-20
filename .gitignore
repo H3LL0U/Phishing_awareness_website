@@ -4,3 +4,4 @@ visited.db
 .env
 __pycache__
 .venv
+static/images/km

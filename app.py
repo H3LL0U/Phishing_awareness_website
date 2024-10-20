@@ -52,7 +52,7 @@ def link_redirect(encrypted_email):
     
     add_property_to_documents(connection_db,"visited",True,filter_query={"_id":email_id})
     
-    response = make_response(render_template("login.html", root_name = "/"))
+    response = make_response(render_template("login2.html", root_name = "/", username = decrypt_value(encrypted_email)))
     response.set_cookie("login",encrypted_email)
     return response
 @app.route("/typed")
@@ -63,6 +63,7 @@ def typed():
 
     add_property_to_documents(connection_db,"started_typing",True,filter_query={"email":encrypted_email})
     return home()
+
 
     
 

