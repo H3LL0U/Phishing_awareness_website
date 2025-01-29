@@ -33,8 +33,9 @@ def setup():
     global connection_db
     ca = certifi.where()
     connection_db = pymongo.MongoClient(config["MONGO_DB_LINK"],maxPoolSize=None,tlsCAFile=ca)
-
 setup()
+
+
 
 @app.route("/", methods = ["POST","GET"])
 def home():

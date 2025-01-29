@@ -1,36 +1,140 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-    <title> If you are here you've clicked on a phishing link</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8, minimum-scale=0.8">
-    <meta name="author" content="H3LL_0U">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Nano Folio - Simple HTML Template</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css')}}"> <!-- https://fontawesome.com/ -->
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
+	<link href="{{ url_for('static', filename='css/magnific-popup.min.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/tooplate-style.css')}}" rel="stylesheet">
 
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <h1>Warning!</h1>
-        </header>
-        <main>
-            <p>You are one of <span style="color: red;">{{visited_amount}}</span> people who have clicked on a malicious
-                link. This site is designed to
-                warn you about phishing attempts.</p>
-        </main>
-        <footer>
-            <p>Be cautious and protect your personal information. For more information, visit <a
-                    href="https://www.consumer.ftc.gov/articles/how-recognize-and-avoid-phishing-scams"
-                    target="_blank">FTC's guide on phishing scams</a>.</p>
-            <p>If you wish to stop receiving test phishing emails, please reply with "unsubscribe" to the <a
-                    href="mailto:veryveryverysecuuure@gmx.com">veryveryverysecuuure@gmx.com</a>
-            </p>
-            <p>Project on <a href="https://github.com/users/H3LL0U/projects/8/" target="_blank">Github</a> </p>
-        </footer>
-    </div>
-</body>
+	<div id="warning" class="tm-bgcolor-1"><h1 style="display: block; padding-bottom: 0%; margin-bottom: 0%;">STOP!</h1></div>
+	<div class="tm-container-fluid">
+		
 
+		<section class="tm-site-header tm-flex-center tm-mb-50 tm-bgcolor-1 tm-border-rounded">
+			<h1 style="font-size: 5rem; text-align: center; display: flex; align-items: center; justify-content: center;">
+			<img src="{{ url_for('static', filename='favicon.ico') }}" alt="hook" style="margin-left: 10px; width: 50px; height: auto;">
+			  STOP! 
+			  <img src="{{ url_for('static', filename='favicon.ico') }}" alt="hook" style="margin-left: 10px; width: 50px; height: auto;">
+			</h1>
+			<h2>Je hebt zojuist op een phishing-link geklikt!</h2>
+		  </section>
+
+		<section class="tm-about tm-mb-80 tm-p-50 tm-bgcolor-2 tm-border-rounded">
+
+			<div class="tm-about-text">
+				<p>Jij bent een van <span style="color: red;">{{visited_amount}}</span> mensen die op een phishing link klikte.</p>
+					<p>Deze site is gemaakt om jou te waarschuwen over de gevaren van phishing en jou te leren hoe je phishing kan herkennen. </p>
+
+			</div>
+			
+		</section>
+		<section class="tm-avoid-phishing tm-mb-80 tm-p-50 tm-bgcolor-3 tm-border-rounded">
+			<h2 style="text-align: center;">Hoe voorkom je phishing en gevolgen ervan?</h2>
+
+			<div class="tm-tip tm-mb-40" style="text-align: center;">
+				<h3>Controleer URL's voordat je erop klikt</h3>
+				<p>Controleer altijd de URL van een link voordat je erop klikt. Phishing-sites gebruiken vaak URL's die lijken op legitieme sites, maar kleine verschillen hebben. Je moet daarom ook voorzichtig zijn tijdens het intyppen van jouw wachtwoord.</p>
+				<img src="{{ url_for('static', filename='images/index/check_link.png') }}" alt="Link voorbeeld" style="width: 90%; padding-bottom: 0%;">
+				<p style="text-align: center; padding-top: 0%;">Deze site is een voorbeeld van zo'n link</p>
+			</div>
+			
+			
+			<div class="tm-tip tm-mb-40" >
+				<h3>Schakel tweefactorauthenticatie (2FA) in als het mogelijk is</h3>
+				<p>Schakel 2FA in op je accounts voor een extra beveiligingslaag. Zelfs als je wachtwoord wordt gehackt, kan 2FA onbevoegde toegang voorkomen tot je account.</p>
+				<img src="{{ url_for('static', filename='images/index/two-factor-auth.webp') }}" alt="2FA image" style="width: 75%;">
+			</div>
+			
+			
+			<div class="tm-tip tm-mb-40">
+				<h3>Wees alert op e-mails</h3>
+				<p>Phishing-e-mails lijken vaak afkomstig te zijn van vertrouwde bronnen. Controleer altijd de email waar deze email vandaan kwam en wees kritisch met het verzoek die ze jouw vragen.</p>
+				<img src="{{ url_for('static', filename='images/index/badactoremail_example.png') }}" alt="email example" style="width: 90%;">
+				<p>Meestaal gebruiken scholen/organisaties zijn eigen top-domeinen. Dus als je ziet dat er een raare top-domein in de email-adres staat is de kans groot dat deze email kwaadaardig is.
+					Controleer daarom niet alleen de beginnende stuk, maar ook het einde.
+				</p>
+			</div>
+			
+			<div class="tm-tip tm-mb-40">
+				<h3>Informeer jezelf en anderen</h3>
+				<p>Blijf op de hoogte van de nieuwste phishingtactieken en deel deze kennis met vrienden, familie en collega's om hen te helpen veilig te blijven.</p>
+			</div>
+		</section>
+
+		<div class="github-section">
+			<p>Als je meer wilt weten over het project of wilt helpen met het ontwikkeling bezoek het project op GitHub</p>
+			<a href="https://github.com/users/H3LL0U/projects/8" class="github-button" target="_blank">GitHub</a>
+		</div>
+		
+		
+	<!--
+	<section class="tm-contact tm-mb-50 tm-bgcolor-3 tm-border-rounded">
+			<div class="tm-contact-header tm-flex-center">
+				<i class="fas fa-map-pin fa-3x"></i>
+				<h2>Contact</h2>
+			</div>
+			<div class="tm-contact-info">
+				<address class="tm-mb-30">
+					120 Curabitur sed tortor ultrices,
+					congue odio eget, posuere urna.
+					Praesent at rhoncus 10680
+				</address>
+				<div class="tm-text-white tm-mb-40">Tel: <a href="tel:0100200340" class="tm-link-white">010-020-0340</a></div>
+				<div class="tm-flex">
+					<a href="https://facebook.com" class="tm-social-link"><i class="fab fa-facebook"></i></a>
+					<a href="https://twitter.com" class="tm-social-link"><i class="fab fa-twitter"></i></a>
+					<a href="https://instagram.com" class="tm-social-link"><i class="fab fa-instagram"></i></a>
+				</div>
+			</div>
+			<div class="tm-contact-form-container">
+				<form id="contact-form" action="" method="POST" class="tm-contact-form">
+		          	<input type="text" name="name" placeholder="name" required="" />
+		          	<input type="email" name="email" placeholder="email" required="" />
+		          	<textarea rows="5" name="message" class="tm-mb-30" placeholder="message" required=""></textarea>		          	
+		          	<button type="submit" class="tm-right tm-btn-submit">send</button>          	
+		        </form>    
+			</div>
+		</section> -->
+
+	</div>
+
+	<script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
+	<script src="{{ url_for('static', filename='js/imagesloaded.pkgd.min.js')}}"></script>
+	<script src="{{ url_for('static', filename='js/isotope.pkgd.min.js')}}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js')}}"></script>
+	<script>
+		$(function(){
+		  	// Init the image gallery
+		  	var $gallery = $(".tm-gallery").isotope({
+		    	itemSelector: ".tm-gallery-item",
+		    	layoutMode: "fitRows"
+		  	});
+		  
+		  	// Layout Isotope after each image loads
+		  	$gallery.imagesLoaded().progress(function() {
+		    	$gallery.isotope("layout");
+		  	});
+
+		  	$(".filters-button-group").on("click", "a", function(e) {
+		  		e.preventDefault();
+			    var filterValue = $(this).attr("data-filter");
+			    $gallery.isotope({ filter: filterValue });
+			    $('.filters-button-group a').removeClass('active');
+			    $(this).addClass('active');
+			});
+
+		  	// Magnific Pop up
+		  	$('.tm-gallery').magnificPopup({
+		  		delegate: 'a',
+			  	type: 'image',
+				  gallery: { enabled: true }
+			});
+		});
+	</script>
+</body>
 </html>
