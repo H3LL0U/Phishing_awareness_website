@@ -2,7 +2,7 @@
 import os
 from flask import Flask, render_template , request, make_response
 import dotenv
-from Database_func import *
+from EmailSenderPy import *
 app = Flask(__name__)
 import pymongo
 import certifi
