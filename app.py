@@ -6,7 +6,7 @@ from EmailSenderPy import *
 app = Flask(__name__)
 import pymongo
 import certifi
-
+import datetime
 
 #read from .env file
 '''
@@ -26,7 +26,7 @@ config = dict(os.environ)
     Connects to a remote database to store cookies and the amount of people who have visited the website
 '''
 
-connection_db = None
+connection_db :pymongo.MongoClient | None = None
 
 
 def setup():
@@ -52,12 +52,15 @@ def link_redirect(encrypted_email):
     
     
     add_property_to_documents(connection_db,"visited",True,filter_query={"_id":email_id})
-    
+    #TODO check if already visited before changing the time
+    add_property_to_documents(connection_db,"date_of_visit",str(time.time()),filter_query={"_id":email_id})
+
     response = make_response(render_template("login2.html", root_name = "/", username = decrypt_value(encrypted_email)))
     response.set_cookie("login",encrypted_email)
     return response
 @app.route("/typed")
 def typed():
+    
     encrypted_email = request.cookies.get("login")
     if encrypted_email is None:
         return home()
