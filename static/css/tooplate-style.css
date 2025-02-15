@@ -303,7 +303,7 @@ p {
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
-
+svg > g > g.google-visualization-tooltip { pointer-events: none }
 .github-button:hover {
     background-color: #555; /* Darker shade on hover */
 }
@@ -318,3 +318,4 @@ p {
 .tm-bgcolor-2 { background-color: #F2B28C; }
 .tm-bgcolor-3 { background-color: #99CCCC; }
 .tm-border-rounded { border-radius: 15px; }
+.tm-bgcolor-4{background-color: white;}

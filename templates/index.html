@@ -3,15 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Nano Folio - Simple HTML Template</title>
+	<title>Main page</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css')}}"> <!-- https://fontawesome.com/ -->
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
 	<link href="{{ url_for('static', filename='css/magnific-popup.min.css')}}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/tooplate-style.css')}}" rel="stylesheet">
-
+	<link href="{{ url_for('static', filename='css/components/navbar.css')}}" rel="stylesheet"> <!-- css for the navbar-->
 </head>
 <body>
-	<div id="warning" class="tm-bgcolor-1"><h1 style="display: block; padding-bottom: 0%; margin-bottom: 0%;">STOP!</h1></div>
+	{% include 'components/navbar.html' %}
+	{% if warn %}
+    {% include 'animations/warning.html' %}
+	{% endif %}
 	<div class="tm-container-fluid">
 		
 

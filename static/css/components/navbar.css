@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
+
+header {
+  background: #55d6d6;
+  border-bottom: #444 solid 3px;
+  border-bottom-left-radius: 10%;  
+  border-bottom-right-radius: 10%;
+}
+
+header::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+nav {
+  float: right;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  display: inline-block;
+  margin-left: 70px;
+  padding-top: 23px;
+  
+  position: relative;
+}
+
+nav a {
+  color: #444;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+}
+
+nav a:hover {
+  color: #000;
+}
+
+nav a::before {
+  content: '';
+  display: block;
+  height: 5px;
+  background-color: #444;
+
+  position: absolute;
+  top: 0;
+  width: 0%;
+
+  transition: all ease-in-out 250ms;
+}
+
+nav a:hover::before {
+  width: 100%;
+}
+.navbar-container{
+    width: 80%;
+
+}
+
+/* Logo */
+#logo {
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+    float: left;
+    margin-left: 10%;
+    
+}
+
+
+.hover-text {
+    display: inline-block;  
+    transition: transform 0.3s ease-in-out;  
+    margin: 2px;
+}
+
+/* Move "_" up when hovering */
+#logo:hover .hover-text {
+    transform: translateY(-10px);
+}
+
+
+@media (max-width: 777px) {
+    /* Center the logo */
+    #logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Center navigation */
+    nav {
+        display: flex;
+        justify-content: center;  /* Center horizontally */
+        align-items: center;      /* Align vertically */
+        width: 100%;
+        margin-top: 10px;         /* Optional spacing */
+    }
+
+    /* Stack navigation items and center them */
+    nav ul {
+        display: flex;
+        flex-direction: column;  /* Stack items vertically */
+        align-items: center;     /* Center-align items */
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    /* Style individual nav items */
+    nav ul li {
+        margin: 10px 0;  /* Add some spacing between items */
+    }
+
+    /* Ensure navbar container is centered */
+    .navbar-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+}

@@ -1,0 +1,140 @@
+<script>
+google.charts.load('current', {packages: ['corechart']});
+google.charts.setOnLoadCallback(drawCharts);
+
+function drawTraficChart(){
+    var total_users = {{total_users}}; 
+    var typed = {{typed}}; 
+    var visited = {{visited}} - typed;
+    var not_visited = total_users - (typed + visited);
+
+    //chart for user trafic
+    var pieDataArray = [['Gebruiker status', 'Aantal gebruikers']];
+
+    // Only add non-zero values to the chart
+    if (visited > 0) pieDataArray.push(['Bezocht zonder typen', visited]);
+    if (not_visited > 0) pieDataArray.push(['Niet Bezocht', not_visited]);
+    if (typed > 0) pieDataArray.push(['Bezocht en begon te typen in het wachtwoord veld', typed]);
+
+    var pieData = google.visualization.arrayToDataTable(pieDataArray);
+
+    var pieOptions = {
+        title: '',
+        is3D: true,
+        sliceVisibilityThreshold: 0
+    };
+
+    var pieChart = new google.visualization.PieChart(document.getElementById('pie_chart_visited_users'));
+    pieChart.draw(pieData, pieOptions);
+
+    
+    window.pieChart = pieChart;
+    window.pieData = pieData;
+    window.pieOptions = pieOptions;
+}
+function drawTimeVisitChart() {
+    var dataPoints = [
+    {{users_by_time | safe}}
+    ]; 
+
+    
+    var data = new google.visualization.DataTable();
+    data.addColumn('datetime', 'Datum');
+    data.addColumn('number', 'Aantal bezocht');
+    data.addColumn({ type: 'string', role: 'tooltip' });
+
+    // Add a placeholder if no data points are available
+    if (dataPoints.length === 0) {
+        
+        var placeholderDate = new Date();  
+        data.addRow([placeholderDate, 0, 'No Data Available']);
+    } else {
+        
+        dataPoints.forEach(dp => {
+            let date = new Date(dp.date);
+            let formattedTooltip = `${date.toLocaleDateString()} ${date.getHours()}:00`;
+            data.addRow([date, dp.value, formattedTooltip]);
+        });
+    }
+
+    
+    var options = {
+        title: '',
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        hAxis: {
+            title: 'Datum en tijd',
+            format: 'MMM d, HH:00',
+            gridlines: { count: -1 }  
+        },
+        vAxis: { title: 'Aantal bezocht' },
+        tooltip: { isHtml: false, trigger: 'focus' },
+    };
+
+    // Create and draw the chart
+    var chart = new google.visualization.LineChart(document.getElementById('time_visit_chart'));
+    chart.draw(data, options);
+}
+
+function drawTimeEmailChart() {
+    var dataPoints = [
+    {{email_by_time | safe}}
+    ]; 
+
+    
+    var data = new google.visualization.DataTable();
+    data.addColumn('datetime', 'Datum');
+    data.addColumn('number', 'Aantal verstuurde e-mails');
+    data.addColumn({ type: 'string', role: 'tooltip' });
+
+    // Add a placeholder if no data points are available
+    if (dataPoints.length === 0) {
+        
+        var placeholderDate = new Date();  
+        data.addRow([placeholderDate, 0, 'No Data Available']);
+    } else {
+        
+        dataPoints.forEach(dp => {
+            let date = new Date(dp.date);
+            let formattedTooltip = `${date.toLocaleDateString()} ${date.getHours()}:00`;
+            data.addRow([date, dp.value, formattedTooltip]);
+        });
+    }
+
+    
+    var options = {
+        title: '',
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        hAxis: {
+            title: 'Datum en tijd',
+            format: 'MMM d, HH:00',
+            gridlines: { count: -1 }  
+        },
+        vAxis: { title: 'Aantal verstuurde e-mails' },
+        tooltip: { isHtml: false, trigger: 'focus' },
+    };
+
+    // Create and draw the chart
+    var chart = new google.visualization.LineChart(document.getElementById('email_by_time'));
+    chart.draw(data, options);
+}
+
+
+
+
+function drawCharts() {
+    drawTraficChart()
+    drawTimeVisitChart()
+    drawTimeEmailChart()
+}
+
+
+
+window.addEventListener('resize', function () {
+    clearTimeout(window.resizedFinished);
+    window.resizedFinished = setTimeout(function(){
+        google.charts.setOnLoadCallback(drawCharts);
+    }, 300); 
+});
+</script>

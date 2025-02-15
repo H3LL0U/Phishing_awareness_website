@@ -7,7 +7,7 @@ app = Flask(__name__)
 import pymongo
 import certifi
 import datetime
-
+from parse_python import *
 #read from .env file
 '''
 
@@ -38,9 +38,9 @@ setup()
 
 
 @app.route("/", methods = ["POST","GET"])
-def home():
+def home(warn = False):
     visited_amount = get_visited_ammount(connection_db,"Emails","Emails")
-    response = render_template("index.html", root_name = "/",visited_amount = visited_amount)
+    response = render_template("index.html", root_name = "/",visited_amount = visited_amount, warn = warn)
 
     return response
 @app.route('/<path:encrypted_email>', methods=['GET'])
@@ -53,7 +53,7 @@ def link_redirect(encrypted_email):
     
     add_property_to_documents(connection_db,"visited",True,filter_query={"_id":email_id})
     #TODO check if already visited before changing the time
-    add_property_to_documents(connection_db,"date_of_visit",str(time.time()),filter_query={"_id":email_id})
+    add_property_to_documents(connection_db,"date_of_visit",datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'),filter_query={"_id":email_id})
 
     response = make_response(render_template("login2.html", root_name = "/", username = decrypt_value(encrypted_email)))
     response.set_cookie("login",encrypted_email)
@@ -63,12 +63,31 @@ def typed():
     
     encrypted_email = request.cookies.get("login")
     if encrypted_email is None:
-        return home()
+        return home(warn=True)
 
     add_property_to_documents(connection_db,"started_typing",True,filter_query={"email":encrypted_email})
-    return home()
+    return home(warn=True)
+
+@app.route("/data")
+def data():
+    visited = get_visited_ammount(connection_db)
+    visited_users = get_documents_by_query(connection_db,{"date_of_visit": {"$ne": "None"}})
+    sent_emails = get_documents_by_query(connection_db,{"date_of_email": {"$ne": "None"}})
+    
+
+    users_by_time = get_hourly_date_from_documents(visited_users,"date_of_visit")
+    users_by_time = dict_to_javascript_format(users_by_time) if users_by_time else ""
 
 
+    email_by_time = get_hourly_date_from_documents(sent_emails,"date_of_email")
+    email_by_time = dict_to_javascript_format(email_by_time) if email_by_time else ""
+
+    return render_template("data.html" ,
+                            typed = 1,total_users = get_ammount_documents(connection_db),
+                            visited = get_visited_ammount(connection_db), 
+                            users_by_time = users_by_time, 
+                            email_by_time = email_by_time
+                            )
     
 
 if __name__ =="__main__":
