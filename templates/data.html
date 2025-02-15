@@ -11,7 +11,8 @@
     <link href="{{ url_for('static', filename='css/data.css')}}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/components/navbar.css')}}" rel="stylesheet"> <!-- css for the navbar-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    {% include 'jinja_js/charts.html' %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/charts/charts.js')}}"></script>
+    
 </head>
 <body>
     {% include 'components/navbar.html' %}

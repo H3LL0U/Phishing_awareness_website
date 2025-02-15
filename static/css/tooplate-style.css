@@ -205,6 +205,7 @@ address { font-style: normal; }
     text-align: center; /* Ensures the text itself is centered */
     opacity: 0;
     pointer-events: none;
+    z-index: 100;
   }
 
 #warning h1{

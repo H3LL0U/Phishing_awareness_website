@@ -11,10 +11,11 @@
 	<link href="{{ url_for('static', filename='css/components/navbar.css')}}" rel="stylesheet"> <!-- css for the navbar-->
 </head>
 <body>
-	{% include 'components/navbar.html' %}
 	{% if warn %}
     {% include 'animations/warning.html' %}
 	{% endif %}
+	{% include 'components/navbar.html' %}
+
 	<div class="tm-container-fluid">
 		
 

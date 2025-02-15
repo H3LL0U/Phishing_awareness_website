@@ -1,6 +1,6 @@
 
 import os
-from flask import Flask, render_template , request, make_response
+from flask import Flask, render_template , request, make_response, jsonify
 import dotenv
 from EmailSenderPy import *
 app = Flask(__name__)
@@ -43,8 +43,8 @@ def home(warn = False):
     response = render_template("index.html", root_name = "/",visited_amount = visited_amount, warn = warn)
 
     return response
-@app.route('/<path:encrypted_email>', methods=['GET'])
-def link_redirect(encrypted_email):
+@app.route('/<path:redirect_type>/<path:encrypted_email>', methods=['GET'])
+def link_redirect(redirect_type,encrypted_email):
     
     email_id = get_id_of_an_email(connection_db,encrypted_email,auto_decrypt=False)
     if email_id is None:
@@ -52,12 +52,34 @@ def link_redirect(encrypted_email):
     
     
     add_property_to_documents(connection_db,"visited",True,filter_query={"_id":email_id})
-    #TODO check if already visited before changing the time
-    add_property_to_documents(connection_db,"date_of_visit",datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'),filter_query={"_id":email_id})
+    
+
+    #validating the redirect type
+    redirect_type_doc = get_documents_by_query(connection_db,{"allowed_type": redirect_type},collection_name="redirect_types")
+    if not redirect_type_doc:
+        return home()
+
+
+    #saving the redirect type and the date in the database
+    try:
+        date_of_visit_value = get_email_properties(connection_db,decrypt_value(encrypted_email),auto_decrypt=False)["date_of_visit"]
+    except KeyError:
+        date_of_visit_value = "None"
+    
+    if date_of_visit_value == "None":
+        new_date_of_visit_value = {redirect_type:datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')}
+    elif redirect_type in date_of_visit_value:
+        new_date_of_visit_value = date_of_visit_value
+    else:
+        new_date_of_visit_value = date_of_visit_value
+        new_date_of_visit_value[redirect_type] = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+    add_property_to_documents(connection_db,"date_of_visit",new_date_of_visit_value,filter_query={"_id":email_id})
 
     response = make_response(render_template("login2.html", root_name = "/", username = decrypt_value(encrypted_email)))
     response.set_cookie("login",encrypted_email)
     return response
+
+
 @app.route("/typed")
 def typed():
     
@@ -89,9 +111,45 @@ def data():
                             email_by_time = email_by_time
                             )
     
+#API CALLS ======================
+
+@app.route("/api/visit_data",methods = ["POST"])
+def api_visit_data():
+    try:
+        visited_users = get_documents_by_query(connection_db,{"date_of_visit": {"$ne":"None"}})
+        visited_users = structure_date_data([visited_user["date_of_visit"] for visited_user in visited_users])
+
+        response = dict()
+        response["visited"] = get_visited_ammount(connection_db)
+        response["typed"] = len(get_documents_by_query(connection_db,{"started_typing":True}))
+        response["total_users"] = get_ammount_documents(connection_db)
+        response["visit_trafic"] = visited_users
+        
+        return jsonify(response)
+    except KeyboardInterrupt:
+        raise KeyboardInterrupt
+    except:
+        return jsonify({"Error": "couldn't get the data"})
+
+@app.route("/api/email_data",methods = ["POST"])
+def api_email_data():
+    try:
+        sent_emails = get_documents_by_query(connection_db,{"date_of_email": {"$ne":"None"}})
+        sent_emails = structure_date_data([sent_email["date_of_email"] for sent_email in sent_emails])
+
+
+        response = dict()
+        response["email_trafic"] = sent_emails
+        return jsonify(response)
+    except KeyboardInterrupt:
+        raise KeyboardInterrupt
+    except:
+        return jsonify({"Error": "couldn't get the data"})
+
+
 
 if __name__ =="__main__":
-
+    
 
     app.run(host="0.0.0.0",port=5000, debug=True)
     connection_db.close()
