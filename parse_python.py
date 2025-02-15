@@ -1,7 +1,7 @@
 def dict_to_javascript_format(_dict:dict):
     parsed_str = ""
     for value in _dict:
-        parsed_str += f'{"{"+ f'"date": "{value}", value: {_dict[value]}' + "}"}, \n'
+        parsed_str += '{"date": "' + value + '", value: ' + str(_dict[value]) + '}, \n'
     return parsed_str
 
 
