@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Main page</title>
+	<link rel="shortcut icon" , href="{{ url_for('static', filename='favicon.ico') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css')}}"> <!-- https://fontawesome.com/ -->
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
 	<link href="{{ url_for('static', filename='css/magnific-popup.min.css')}}" rel="stylesheet">
@@ -54,20 +55,31 @@
 				<img src="{{ url_for('static', filename='images/index/two-factor-auth.webp') }}" alt="2FA image" style="width: 75%;">
 			</div>
 			
+			<div class="tm-tip tm-mb-40" >
+				<h3>Wissel regelmatig jouw wachtwoord</h3>
+				<p>Er is altijd een kans dat jouw account een slachtoffer van een datalek of phishing kan zijn. Als je regelmatig jouw wachtwoorden verandert is de kans lager dat iemand ervan gebruik van maakt</p>
+				
+			</div>
 			
 			<div class="tm-tip tm-mb-40">
 				<h3>Wees alert op e-mails</h3>
 				<p>Phishing-e-mails lijken vaak afkomstig te zijn van vertrouwde bronnen. Controleer altijd de email waar deze email vandaan kwam en wees kritisch met het verzoek die ze jouw vragen.</p>
 				<img src="{{ url_for('static', filename='images/index/badactoremail_example.png') }}" alt="email example" style="width: 90%;">
 				<p>Meestaal gebruiken scholen/organisaties zijn eigen top-domeinen. Dus als je ziet dat er een raare top-domein in de email-adres staat is de kans groot dat deze email kwaadaardig is.
-					Controleer daarom niet alleen de beginnende stuk, maar ook het einde.
+			
 				</p>
 			</div>
-			
+			<div class="tm-tip tm-mb-40">
+				<h3>Controleer de spelling en grammatica in e-mails</h3>
+				<p>Phishing-e-mails bevatten vaak onjuiste spelling of grammaticale fouten. Wees alert als een e-mail vreemde taalgebruik of slordige zinnen bevat, vooral als het afkomstig lijkt van een betrouwbare bron.</p>
+				
+			</div>
 			<div class="tm-tip tm-mb-40">
 				<h3>Informeer jezelf en anderen</h3>
 				<p>Blijf op de hoogte van de nieuwste phishingtactieken en deel deze kennis met vrienden, familie en collega's om hen te helpen veilig te blijven.</p>
+				<p>Voor de integriteit van dit onderzoek is het belangrijk dat je de details ervan niet deelt. :)</p>
 			</div>
+
 		</section>
 
 		<div class="github-section">

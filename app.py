@@ -45,7 +45,18 @@ def home(warn = False):
     return response
 @app.route('/<path:redirect_type>/<path:encrypted_email>', methods=['GET'])
 def link_redirect(redirect_type,encrypted_email):
+    '''
+    If the redirect_type is valid and so is the encrypted_email this will be recorded in the database in the following format in the database:
     
+    visited: true
+    date_of_visit : [{redirect_type}: date, ...] 
+    
+    if the same user entres using a different redirect type it is going to be added to the list
+
+    the cookie is also being set for the case that the users starts to type (see "typed" function)
+
+    
+    '''
     email_id = get_id_of_an_email(connection_db,encrypted_email,auto_decrypt=False)
     if email_id is None:
         return home()
@@ -75,14 +86,23 @@ def link_redirect(redirect_type,encrypted_email):
         new_date_of_visit_value[redirect_type] = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
     add_property_to_documents(connection_db,"date_of_visit",new_date_of_visit_value,filter_query={"_id":email_id})
 
-    response = make_response(render_template("login2.html", root_name = "/", username = decrypt_value(encrypted_email)))
+    response = make_response(render_template("login.html", root_name = "/", username = decrypt_value(encrypted_email)))
     response.set_cookie("login",encrypted_email)
     return response
-
+@app.route("/over")
+def over():
+    
+    return render_template("over.html")
 
 @app.route("/typed")
 def typed():
+    '''
+    when the user starts typing in the password field he gets redirected to this page. This will update the user's parameter in the database:
     
+    "started_typing":true 
+    
+    also an extra warning animation will appear
+    '''
     encrypted_email = request.cookies.get("login")
     if encrypted_email is None:
         return home(warn=True)
@@ -90,8 +110,16 @@ def typed():
     add_property_to_documents(connection_db,"started_typing",True,filter_query={"email":encrypted_email})
     return home(warn=True)
 
+
+
+
 @app.route("/data")
 def data():
+
+    '''
+    This page shows the collected data using different charts. These charts get their data from the custom API calls (see bellow)
+    '''
+
     visited = get_visited_ammount(connection_db)
     visited_users = get_documents_by_query(connection_db,{"date_of_visit": {"$ne": "None"}})
     sent_emails = get_documents_by_query(connection_db,{"date_of_email": {"$ne": "None"}})
@@ -104,17 +132,18 @@ def data():
     email_by_time = get_hourly_date_from_documents(sent_emails,"date_of_email")
     email_by_time = dict_to_javascript_format(email_by_time) if email_by_time else ""
 
-    return render_template("data.html" ,
-                            typed = 1,total_users = get_ammount_documents(connection_db),
-                            visited = get_visited_ammount(connection_db), 
-                            users_by_time = users_by_time, 
-                            email_by_time = email_by_time
-                            )
+    return render_template("data.html")
     
 #API CALLS ======================
 
 @app.route("/api/visit_data",methods = ["POST"])
 def api_visit_data():
+    '''
+    This API is used to get the data relating to user trafic such as:
+    how many users that visited the website, how many users started typing in the password field, and total possible amount of users
+    also it will show when the users entred the website the most and what caused them to visit the site
+
+    '''
     try:
         visited_users = get_documents_by_query(connection_db,{"date_of_visit": {"$ne":"None"}})
         visited_users = structure_date_data([visited_user["date_of_visit"] for visited_user in visited_users])
@@ -133,6 +162,10 @@ def api_visit_data():
 
 @app.route("/api/email_data",methods = ["POST"])
 def api_email_data():
+    '''
+    This API is used for getting the sent Emails from the database. It shows how many emails of each type were sent.
+    '''
+
     try:
         sent_emails = get_documents_by_query(connection_db,{"date_of_email": {"$ne":"None"}})
         sent_emails = structure_date_data([sent_email["date_of_email"] for sent_email in sent_emails])

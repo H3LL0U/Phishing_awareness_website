@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css')}}">
+    <link rel="shortcut icon" , href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" , type="text/css" , href="{{ url_for('static', filename='css/login2.css') }}">
     <script>
         function checkPassword(event) {
             const passwordInput = event.target.value;
@@ -17,16 +18,37 @@
 </head>
 
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form onsubmit="event.preventDefault();">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required oninput="checkPassword(event)" maxlength="1">
-            <input type="submit" value="Login">
+
+    <div class="sign-in-box">
+        <img src="{{ url_for('static', filename='images/km/bannerlogo.png') }}" alt="Logo" class="banner-logo">
+
+        <div class="identity-banner">
+            <button class="backButton">
+                <img src="https://aadcdn.msauth.net/shared/1.0/content/images/arrow_left_43280e0ba671a1d8b5e34f1931c4fe4b.svg"
+                    alt="terug">
+            </button>
+            <div class="identity">{{username}}</div>
+        </div>
+
+        <div class="title">Wachtwoord invoeren</div>
+
+        <form method="get">
+            <div onsubmit="event.preventDefault();" class="form-group">
+                <input type="password" name="passwd" class="input" placeholder="Wachtwoord"
+                    aria-label="Typ jouw wachtwoord hier" required oninput="checkPassword(event)" maxlength="1">
+            </div>
+            <div class="button-container">
+                <input type="submit" class="button" value="aanmelden">
+            </div>
         </form>
+
+
+
+        <div class="boilerplate-text">
+            Samen leren, samen werken en samen leven binnen Openbaar Onderwijs Groningen.
+        </div>
     </div>
+
 </body>
 
 </html>

@@ -1,0 +1,24 @@
+.steps-explanation h1 {
+    font-size: 3rem;
+}
+
+.steps-explanation ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+    background: inherit;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+}
+.steps-explanation li {
+    padding: 10px;
+    margin-bottom: 5px;
+    background: #3498db;
+    color: white;
+    border-radius: 5px;
+}
+h3{
+    font-size: 1.3rem;
+    text-align: center;
+}

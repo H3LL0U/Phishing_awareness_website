@@ -315,8 +315,14 @@ svg > g > g.google-visualization-tooltip { pointer-events: none }
 .tm-mb-40 { margin-bottom: 40px; }
 .tm-mb-50 { margin-bottom: 50px; }
 .tm-mb-80 { margin-bottom: 80px; }
-.tm-bgcolor-1 { background-color: #d12e2e; }
+.tm-bgcolor-1 { background-color: #d12e2e; } 
 .tm-bgcolor-2 { background-color: #F2B28C; }
-.tm-bgcolor-3 { background-color: #99CCCC; }
+.tm-bgcolor-3 { background-color: #99CCCC; } 
+.tm-bgcolor-4 { background-color: white; } 
+.tm-bgcolor-5 { background-color: #2E86C1; } 
+.tm-bgcolor-6 { background-color: #F4D03F; } 
+.tm-bgcolor-7 { background-color: #A569BD; } 
+.tm-bgcolor-8 { background-color: #1ABC9C; } 
+.tm-bgcolor-9 { background-color: #E67E22; } 
+.tm-bgcolor-10 { background-color: #34495E; }
 .tm-border-rounded { border-radius: 15px; }
-.tm-bgcolor-4{background-color: white;}
