@@ -80,36 +80,72 @@ function drawTraficChart(){
     window.pieData = pieData;
     window.pieOptions = pieOptions;
 }
-function drawTimeVisitChart(jsonData, idName, unit ) {
-    // Example data (replace this with the actual data you want to use)
-    var jsonData = jsonData;
-
-    
+function drawTimeVisitChart(jsonData, idName, unit) {
     var data = new google.visualization.DataTable();
     data.addColumn('datetime', 'Datum');
-    data.addColumn('number', unit);
+
+    // Add a column for each redirect type + tooltip column
+    var keys = Object.keys(jsonData);
+    keys.forEach(key => {
+        data.addColumn('number', key);
+        data.addColumn({ type: 'string', role: 'tooltip' }); // Tooltip for each series
+    });
+
+    // Add a column for the total cumulative sum
+    data.addColumn('number', 'Totaal');
     data.addColumn({ type: 'string', role: 'tooltip' });
 
-    // Loop through each redirect type in the JSON data
-    Object.keys(jsonData).forEach(function(key) {
-        // For each redirect type, loop through the date and value pairs
-        var dataPoints = jsonData[key];
-        var lineData = [];
+    var allDates = new Set();
 
-        Object.keys(dataPoints).forEach(function(date) {
-            
-            var dateObj = new Date(date);
-            
-            var value = dataPoints[date];
-            
-            var tooltip = `Redirect type: ${key}, Date: ${dateObj.toLocaleString()}`;
-            
-            lineData.push([dateObj, value, tooltip]);
+    // Collect all unique dates
+    keys.forEach(key => {
+        Object.keys(jsonData[key]).forEach(date => allDates.add(date));
+    });
+
+    // Convert the set to an array and sort it in ascending order
+    var sortedDates = Array.from(allDates).sort((a, b) => new Date(a) - new Date(b));
+
+    // Track cumulative values for each redirect type and the total
+    var cumulativeData = {};
+    keys.forEach(key => cumulativeData[key] = 0);
+    var cumulativeTotal = 0;
+
+    // Prepare data points
+    var chartData = [];
+
+    sortedDates.forEach(date => {
+        var dateObj = new Date(date);
+        var row = [dateObj];
+
+        var totalAtThisTime = 0;
+        var totalTooltip = `Tijd: ${dateObj.toLocaleString()}\n`;
+
+        keys.forEach(key => {
+            if (jsonData[key][date]) {
+                cumulativeData[key] += jsonData[key][date];
+            }
+            row.push(cumulativeData[key]);
+
+            // Create a tooltip for this specific redirect type
+            let tooltipText = `Tijd: ${dateObj.toLocaleString()}\nRedirect type: ${key}\n${unit}: ${cumulativeData[key]}`;
+            row.push(tooltipText);
+
+            totalAtThisTime += cumulativeData[key];
         });
 
-        // Add the data for this line (redirect type) to the Google Charts data table
-        data.addRows(lineData);
+        // Update cumulative total
+        cumulativeTotal = totalAtThisTime;
+        row.push(cumulativeTotal);
+
+        // Tooltip for the total
+        totalTooltip += `Totaal ${unit}: ${cumulativeTotal}`;
+        row.push(totalTooltip);
+
+        chartData.push(row);
     });
+
+    // Add rows to the data table
+    data.addRows(chartData);
 
     // Chart options
     var options = {
@@ -118,11 +154,11 @@ function drawTimeVisitChart(jsonData, idName, unit ) {
         legend: { position: 'bottom' },
         hAxis: {
             title: 'Datum en tijd',
-            format: 'MMM d, HH:00', 
-            gridlines: { count: -1 }  
+            format: 'MMM d, HH:mm:ss',
+            gridlines: { count: -1 }
         },
         vAxis: { title: unit },
-        tooltip: { isHtml: true, trigger: 'focus' }, // Show custom tooltip
+        tooltip: { isHtml: false, trigger: 'focus' }, // Standard tooltip behavior
     };
 
     // Create and draw the chart
@@ -130,13 +166,59 @@ function drawTimeVisitChart(jsonData, idName, unit ) {
     chart.draw(data, options);
 }
 
+function drawHourlyVisitHistogram(jsonData, idName, unit) {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Uur'); // X-axis: Hours (0-23)
+    data.addColumn('number', unit); // Y-axis: Total visits
+
+    // Object to store visit counts per hour
+    var hourlyVisits = Array(24).fill(0);
+
+    // Loop through each redirect type
+    Object.values(jsonData).forEach(entries => {
+        Object.keys(entries).forEach(date => {
+            var hour = new Date(date).getHours(); // Extract the hour (0-23)
+            hourlyVisits[hour] += entries[date]; // Add visit count to the respective hour
+        });
+    });
+
+    // Convert data into Google Charts format
+    var chartData = [];
+    for (var hour = 0; hour < 24; hour++) {
+        chartData.push([hour.toString() + ":00", hourlyVisits[hour]]);
+    }
+
+    data.addRows(chartData);
+
+    // Chart options
+    var options = {
+        title: '',
+        legend: { position: 'none' }, // No legend needed for a single dataset
+        hAxis: {
+            title: 'Uur van de dag',
+            format: 'H',
+            gridlines: { count: 24 }
+        },
+        vAxis: {
+            title: unit
+        },
+        histogram: { bucketSize: 1 }, // Each bucket represents an hour
+    };
+
+    // Create and draw the histogram
+    var chart = new google.visualization.ColumnChart(document.getElementById(idName));
+    chart.draw(data, options);
+}
+
+
 
 
 
 function drawCharts() {
     drawTraficChart()
-    drawTimeVisitChart(jsonData=trafic_data,idName='time_visit_chart',unit = "Aantal bezocht")
+    drawTimeVisitChart(jsonData=trafic_data,idName='time_visit_chart',unit = "Aantal redirects")
     drawTimeVisitChart(jsonData=email_trafic_data,'email_by_time', unit = "Aantal verstuurde e-mails")
+    drawHourlyVisitHistogram(jsonData = trafic_data,"hourly_visit_chart", unit="Aantal bezochten op een bepaalde uur")
 }
 
 

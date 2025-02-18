@@ -60,7 +60,7 @@ def structure_date_data(_list: list[dict]) -> dict:
         for key, value in entry.items():
             try:
                 
-                date_str = value[:-5] + "00:00"  
+                date_str = value 
 
                 
                 formatted_data[key][date_str] += 1
