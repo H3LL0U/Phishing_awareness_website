@@ -29,47 +29,45 @@
             Hoe bereikt het project dat?
         </h1>
         <br>
-        <h2>E-mails verzamelen</h2>
-        <p>Als eerst worden de e-mailadressen van leerlingen verkregen. Daar wordt vervolgens een mailtje gestuurd met een link naar deze website.
-            Emails worden verstuurd met behulp van een Python bibliotheek en een CLI-interface die een onderdeel zijn van dit project.</p>
+        <h3>E-mails verzamelen/versturen</h3>
+        <p>Eerst worden de e-mailadressen van leerlingen verzameld. Vervolgens ontvangen ze een e-mail met een link naar deze website. In de e-mail staat een tekst die de persoon dwingt om in te loggen bij de website.
+            Voor elke gebruiker is een uniek link verstuurd zodat data alleen voor deze gebruiker verzameld wordt en het duidelijk is welke gebruiker de website bezoekt.
+            E-mails worden verstuurd met een Python-bibliotheek en een CLI-interface, beide ontwikkeld als onderdeel van dit project</p>
 
     
-        <h2>De website</h2>
+        <h3>De website</h3>
         <p>Na het bezoeken van de website wordt de gebruiker geconfronteerd met een inlogpagina. Deze is alleen met de verkregen link te bereiken. Zodra de bezoeker begint te typen in het wachtwoordveld, wordt hij of zij direct doorgestuurd naar een informatieve pagina. Daar krijgt de gebruiker uitleg over de gemaakte fout en tips om phishing-aanvallen in de toekomst beter te herkennen.</p>
-        <p><strong>Belangrijk:</strong> Een persoon wordt doorgestuurd zodra hij <strong>begint</strong> met typen en <strong>niet</strong> pas nadat hij zijn wachtwoord volledig heeft ingevoerd. Dit zorgt ervoor dat de gebruiker weet dat zijn wachtwoord niet is gecompromitteerd.</p><p> Daarnaast kan hij op deze pagina de tot nu toe verzamelde geanonimiseerde data bekijken en extra informatie over het project vinden.</p>
+        <p><strong>Belangrijk:</strong> Een gebruiker wordt doorgestuurd zodra hij <strong>begint</strong> te typen, en <strong>niet</strong> pas nadat hij zijn wachtwoord volledig heeft ingevoerd</p>
         <p>De website is gemaakt met behulp van een Flask framework.</p>
         
         
             <br>
-        <h2>Opzetten van een database met gegevens</h2>
+        <h3>Opzetten van een database met gegevens</h3>
         <p>Per gebruiker (leerlingen naar wie e-mail werd verstuurd) wordt bepaalde data verzameld als hij/zij de website bezoekt.</p>
         <p><strong>Voorbeeld van data die verzameld wordt:</strong></p>
         <ul>
-            <li>Wanneer heeft de gebruiker de website bezocht?</li>
-            <li>Begon de gebruiker met typen in het wachtwoordbalkje?</li>
-            <li>Wanneer is de e-mail verstuurd?</li>
-            <li>Wat is de soort van een e-mail die verstuurd werd? toen een persoon op de link klikte</li>
+            <li><p>Wanneer heeft de gebruiker de website bezocht?</p></li>
+            <li><p>Begon de gebruiker met typen in het wachtwoordbalkje?</p></li>
+            <li><p>Wanneer is de e-mail verstuurd?</p></li>
+            <li><p>Wat is de soort van een e-mail die verstuurd werd toen een persoon op de link klikte?</p></li>
         </ul>
         <p>Alle e-mails worden versleuteld opgeslagen, zodat de vertrouwelijkheid van de gegevens gewaarborgd blijft.</p>
         <p>MongoDB wordt gebruikt om deze data op te slaan. Deze keuze is gemaakt, omdat de schaal van het onderzoek relatief klein is (ongeveer 900 mensen) en MongoDB gratis 200MB aan opslaan van data biedt, wat meer dan genoeg is voor het onderzoek.</p>
     
-        <h2>Verkrijgen van een toestemming</h2>
+        <h3>Verkrijgen van een toestemming</h3>
         <p>Dit project roept een aantal ethische vragen op. Daarom is het belangrijk om toestemming van de vertegenwoordigers van de school te vragen voordat het onderzoek doorgaat.</p>
-    
-        <h2>Versturen van E-mails</h2>
-        <p>Met behulp van een tool die specifiek is gemaakt vor dit project (zie stap “E-mails verzamelen”) worden bepaalde e-mails verstuurd naar leerlingen.</p>
         
         
     
-        <h2>Dataverzameling</h2>
-        <p>Na een bepaalde tijd kunnen de verkregen gegevens geanalyseerd worden</p>
+        <h3>Dataverzameling</h3>
+        <p>Na een bepaalde tijd kunnen de verkregen gegevens geanalyseerd worden.</p>
 
         
     
     </section>
 
     <section class="github-section steps-explanation">
-        <h3>Je kunt hier een aantal betrokkene links vinden naar de source code</h2>
+        <p>U kunt hier een aantal relevante links naar de broncode vinden</p>
         <br>
         <a href="https://github.com/H3LL0U/EmailPy" class ="github-button" target="_blank">EmailPy</a>
         <a href="https://github.com/H3LL0U/Phishing_awareness_website" class="github-button" target="_blank">Website</a>

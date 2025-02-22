@@ -33,26 +33,28 @@
 
 			<div class="tm-about-text">
 				<p>Jij bent een van <span style="color: red;">{{visited_amount}}</span> mensen die op een phishing link klikte.</p>
-					<p>Deze site is gemaakt om jou te waarschuwen over de gevaren van phishing en jou te leren hoe je phishing kan herkennen. </p>
+					<p>Deze site is gemaakt om u te waarschuwen over de gevaren van phishing en u te leren hoe je phishing kan herkennen. </p>
 
 			</div>
 			
 		</section>
 		<section class="tm-avoid-phishing tm-mb-80 tm-p-50 tm-bgcolor-3 tm-border-rounded">
-			<h2 style="text-align: center;">Hoe voorkom je phishing en gevolgen ervan?</h2>
+			<h3 style="text-align: center;">Hoe voorkom je phishing en gevolgen ervan?</h2>
 
 			<div class="tm-tip tm-mb-40" style="text-align: center;">
 				<h3>Controleer URL's voordat je erop klikt</h3>
 				<p>Controleer altijd de URL van een link voordat je erop klikt. Phishing-sites gebruiken vaak URL's die lijken op legitieme sites, maar kleine verschillen hebben. Je moet daarom ook voorzichtig zijn tijdens het intyppen van jouw wachtwoord.</p>
-				<img src="{{ url_for('static', filename='images/index/check_link.png') }}" alt="Link voorbeeld" style="width: 90%; padding-bottom: 0%;">
+				<img src="{{ url_for('static', filename='images/index/check_link.png') }}" alt="Link voorbeeld" style="width: 90%; max-width: 1000px; padding-bottom: 0%;">
 				<p style="text-align: center; padding-top: 0%;">Deze site is een voorbeeld van zo'n link</p>
 			</div>
 			
 			
 			<div class="tm-tip tm-mb-40" >
 				<h3>Schakel tweefactorauthenticatie (2FA) in als het mogelijk is</h3>
-				<p>Schakel 2FA in op je accounts voor een extra beveiligingslaag. Zelfs als je wachtwoord wordt gehackt, kan 2FA onbevoegde toegang voorkomen tot je account.</p>
-				<img src="{{ url_for('static', filename='images/index/two-factor-auth.webp') }}" alt="2FA image" style="width: 75%;">
+				<p>Schakel 2FA in op je accounts voor extra beveiliging. Zelfs als je wachtwoord wordt gehackt, kan 2FA onbevoegde toegang voorkomen tot je account.
+					<img src="{{ url_for('static', filename='images/index/two-factor-auth.webp') }}" alt="2FA image" style="width: 75%; max-width: 800px; " class="side-image">
+				</p>
+				
 			</div>
 			
 			<div class="tm-tip tm-mb-40" >
@@ -64,7 +66,7 @@
 			<div class="tm-tip tm-mb-40">
 				<h3>Wees alert op e-mails</h3>
 				<p>Phishing-e-mails lijken vaak afkomstig te zijn van vertrouwde bronnen. Controleer altijd de email waar deze email vandaan kwam en wees kritisch met het verzoek die ze jouw vragen.</p>
-				<img src="{{ url_for('static', filename='images/index/badactoremail_example.png') }}" alt="email example" style="width: 90%;">
+				<img src="{{ url_for('static', filename='images/index/badactoremail_example.png') }}" alt="email example" style="width: 90%; max-width: 1000px;">
 				<p>Meestaal gebruiken scholen/organisaties zijn eigen top-domeinen. Dus als je ziet dat er een raare top-domein in de email-adres staat is de kans groot dat deze email kwaadaardig is.
 			
 				</p>

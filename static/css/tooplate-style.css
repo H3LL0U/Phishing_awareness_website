@@ -6,10 +6,15 @@ https://www.tooplate.com/view/2122-nano-folio
 
 */
 
-html { overflow-x: hidden; background-color: rgb(62, 43, 236);}
+html { overflow-x: hidden;}
 div {
     text-align: center;
 }
+section{
+    width: 75%;
+    margin: 0 auto;
+}
+
 img {
     padding: 5%;
 }
@@ -17,7 +22,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: 18px;
+    
     line-height: 2em;
     overflow-x: hidden;
     background-image: url("/static/images/index/phishing backgound.jpg");
@@ -28,7 +33,9 @@ body {
     padding: 0; 
     height: 100vh
 }
-
+.side-image{
+    float: right;
+}
 a {
     text-decoration: none;
     transition: all 0.3s ease;
@@ -51,9 +58,9 @@ h1, h2, p, i, address, .tm-text-white { color: white; }
 
 .tm-container-fluid {
     width: 100%;
-    max-width: 970px;
+    align-items: center;
     box-sizing: border-box;
-    margin: 0 auto;
+    margin:  auto;
     padding: 60px 15px;
 }
 
@@ -212,6 +219,74 @@ address { font-style: normal; }
     font-size: 5rem;
 }
 
+
+
+h3 {
+    font-size: 2rem; 
+    color: white; 
+    margin-bottom: 20px; 
+    line-height: 1.5em; 
+    font-weight: 600; 
+    text-align: left; 
+}
+p {
+    font-size: 1.5rem; 
+    color: white; 
+    line-height: 2em;
+    margin-bottom: 20px; 
+    font-weight: 400; 
+    text-align: left; 
+}
+.github-section {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    border-radius: 10px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.github-section p {
+    
+    margin-bottom: 20px;
+    color: white;
+}
+
+.github-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #333; /* GitHub's button color */
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin: 3px;
+}
+svg > g > g.google-visualization-tooltip { pointer-events: none }
+.github-button:hover {
+    background-color: #555; /* Darker shade on hover */
+}
+
+.tm-p-50 { padding: 50px; }
+.tm-mb-0 { margin-bottom: 0; }
+.tm-mb-30 { margin-bottom: 30px }
+.tm-mb-40 { margin-bottom: 40px; }
+.tm-mb-50 { margin-bottom: 50px; }
+.tm-mb-80 { margin-bottom: 80px; }
+.tm-bgcolor-1 { background-color: #d12e2e; } 
+.tm-bgcolor-2 { background-color: #F2B28C; }
+.tm-bgcolor-3 { background-color: #99CCCC; } 
+.tm-bgcolor-4 { background-color: white; } 
+.tm-bgcolor-5 { background-color: #2E86C1; } 
+.tm-bgcolor-6 { background-color: #F4D03F; } 
+.tm-bgcolor-7 { background-color: #A569BD; } 
+.tm-bgcolor-8 { background-color: #1ABC9C; } 
+.tm-bgcolor-9 { background-color: #E67E22; } 
+.tm-bgcolor-10 { background-color: #34495E; }
+.tm-border-rounded { border-radius: 15px; }
 @keyframes Warning-animation 
     
 {
@@ -261,68 +336,22 @@ address { font-style: normal; }
         height: auto;
     }
 }
-h3 {
-    font-size: 2rem; 
-    color: white; 
-    margin-bottom: 20px; 
-    line-height: 1.5em; 
-    font-weight: 600; 
-    text-align: left; 
+@media (max-width: 1500px) {
+    .side-image{
+        float:none;
+        object-fit: cover;
+
+
 }
-p {
-    font-size: 1.5rem; 
-    color: white; 
-    line-height: 2em;
-    margin-bottom: 20px; 
-    font-weight: 400; 
-    text-align: left; 
-}
-.github-section {
-    text-align: center;
-    margin-top: 40px;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-    border-radius: 10px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-.github-section p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: white;
-}
+@media (min-width: 1500px) {
+    p{
+        font-size: 1.5vw;
+    }
+    h3{
+        font-size: 2vw;
+    }
 
-.github-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #333; /* GitHub's button color */
-    color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-svg > g > g.google-visualization-tooltip { pointer-events: none }
-.github-button:hover {
-    background-color: #555; /* Darker shade on hover */
-}
 
-.tm-p-50 { padding: 50px; }
-.tm-mb-0 { margin-bottom: 0; }
-.tm-mb-30 { margin-bottom: 30px }
-.tm-mb-40 { margin-bottom: 40px; }
-.tm-mb-50 { margin-bottom: 50px; }
-.tm-mb-80 { margin-bottom: 80px; }
-.tm-bgcolor-1 { background-color: #d12e2e; } 
-.tm-bgcolor-2 { background-color: #F2B28C; }
-.tm-bgcolor-3 { background-color: #99CCCC; } 
-.tm-bgcolor-4 { background-color: white; } 
-.tm-bgcolor-5 { background-color: #2E86C1; } 
-.tm-bgcolor-6 { background-color: #F4D03F; } 
-.tm-bgcolor-7 { background-color: #A569BD; } 
-.tm-bgcolor-8 { background-color: #1ABC9C; } 
-.tm-bgcolor-9 { background-color: #E67E22; } 
-.tm-bgcolor-10 { background-color: #34495E; }
-.tm-border-rounded { border-radius: 15px; }
+}
