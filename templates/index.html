@@ -20,7 +20,7 @@
 	<div class="tm-container-fluid">
 		
 
-		<section class="tm-site-header tm-flex-center tm-mb-50 tm-bgcolor-1 tm-border-rounded">
+		<section class="tm-site-header tm-flex-center tm-mb-50 tm-bgcolor-1 tm-border-rounded tm-mt-60">
 			<h1 style="font-size: 5rem; text-align: center; display: flex; align-items: center; justify-content: center;">
 			<img src="{{ url_for('static', filename='favicon.ico') }}" alt="hook" style="margin-left: 10px; width: 50px; height: auto;">
 			  STOP! 
@@ -125,34 +125,6 @@
 	<script src="{{ url_for('static', filename='js/imagesloaded.pkgd.min.js')}}"></script>
 	<script src="{{ url_for('static', filename='js/isotope.pkgd.min.js')}}"></script>
 	<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js')}}"></script>
-	<script>
-		$(function(){
-		  	// Init the image gallery
-		  	var $gallery = $(".tm-gallery").isotope({
-		    	itemSelector: ".tm-gallery-item",
-		    	layoutMode: "fitRows"
-		  	});
-		  
-		  	// Layout Isotope after each image loads
-		  	$gallery.imagesLoaded().progress(function() {
-		    	$gallery.isotope("layout");
-		  	});
 
-		  	$(".filters-button-group").on("click", "a", function(e) {
-		  		e.preventDefault();
-			    var filterValue = $(this).attr("data-filter");
-			    $gallery.isotope({ filter: filterValue });
-			    $('.filters-button-group a').removeClass('active');
-			    $(this).addClass('active');
-			});
-
-		  	// Magnific Pop up
-		  	$('.tm-gallery').magnificPopup({
-		  		delegate: 'a',
-			  	type: 'image',
-				  gallery: { enabled: true }
-			});
-		});
-	</script>
 </body>
 </html>

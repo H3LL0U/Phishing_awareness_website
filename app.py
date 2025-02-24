@@ -106,7 +106,7 @@ def typed():
     encrypted_email = request.cookies.get("login")
     if encrypted_email is None:
         return home(warn=True)
-
+    
     add_property_to_documents(connection_db,"started_typing",True,filter_query={"email":encrypted_email})
     return home(warn=True)
 
@@ -133,7 +133,16 @@ def data():
     email_by_time = dict_to_javascript_format(email_by_time) if email_by_time else ""
 
     return render_template("data.html")
+
+@app.route("/data_wissen")
+def remove_data():
+    cookie = request.cookies.get("login")
     
+    email = get_email_properties(connection_db,cookie) if cookie else None
+    if email:
+        return render_template("data_wissen.html",user_detected = True)
+    return render_template("data_wissen.html", user_detected = False)
+
 #API CALLS ======================
 
 @app.route("/api/visit_data",methods = ["POST"])
@@ -177,12 +186,49 @@ def api_email_data():
     except KeyboardInterrupt:
         raise KeyboardInterrupt
     except:
-        return jsonify({"Error": "couldn't get the data"})
+        return jsonify({"Error": "Couldn't get the data"}),400
 
+@app.route("/api/remove_user", methods = ["POST"])
+def remove_user():
+    try:
+        try:
+            user = str(request.json["user"])
+        except KeyError:
+            return jsonify({"Error": "Wrong request format"}),400
+        
+        decrypted_user = decrypt_value(user)
+        delte_result = delete_document_by_email(mongo_client=connection_db,
+                                 email=decrypted_user)
+        if delte_result and delte_result.deleted_count ==1:
+            return jsonify({"Success": "User removed"}), 200
+
+
+
+    except KeyboardInterrupt:
+        raise KeyboardInterrupt
+    except Exception as e:
+        
+        return jsonify({"Error": "Wrong request"}),400
+
+@app.route("/api/validate_user",methods = ["POST"])
+def validate_user():
+    try:
+        try:
+            user = request.json["user"]
+        except KeyError:
+            return jsonify({"Error": "Wrong request format"}), 400
+        if get_email_properties(mongo_client=connection_db,email=user):
+            return jsonify({"response":True}),200
+        return jsonify({"response":False}),200
+    except KeyboardInterrupt:
+        raise KeyboardInterrupt
+    except Exception:
+        return jsonify({"Error": "Wrong request"}),400
+        
 
 
 if __name__ =="__main__":
     
 
-    app.run(host="0.0.0.0",port=5000, debug=True)
+    app.run(host="0.0.0.0",port=80, debug=True)
     connection_db.close()

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Data</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css')}}"> <!-- https://fontawesome.com/ -->
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
+	<link href="{{ url_for('static', filename='css/magnific-popup.min.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/tooplate-style.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/data_wissen.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/components/navbar.css')}}" rel="stylesheet"> <!-- css for the navbar-->
+    <link href="{{ url_for('static', filename='css/components/confirmation_pop-up.css')}}" rel="stylesheet">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/remove_user_data.js/request_deletion.js')}}"></script> <!--script for sending a request for data deletion-->
+    <link rel="shortcut icon" , href="{{ url_for('static', filename='favicon.ico') }}">
+    
+</head>
+<body>
+    {% include 'components/navbar.html' %}
+    {% include 'components/confirmation_pop-up.html' %}
+    <div class="tm-container-fluid">
+        <section class=" tm-flex-center tm-mb-50 tm-p-50 tm-bgcolor-8 tm-border-rounded tm-mt-60">
+            <h3 >Wil je niet mee doen aan het onderzoek?</h3>
+            <p>Hier kunt u uw data wissen die deze website heeft verzameld!</p>
+            <p><strong>Belangrijk:</strong> deze website verzamelt alleen data van een bepaalde groep mensen als je geen e-mail heb gekeren die u naar deze website stuurde wordt er geen data over u verzameld</p>
+    <!--Case user has cookie set-->
+    {% if user_detected %}
+    <a class="delete_data_button github-button" onclick="askConfirmation()">Verwijder mijn data</a>
+    {% endif %}
+                
+        </section>
+        {% if not user_detected %}
+        <section class=" tm-flex-center tm-mb-50 tm-p-50 tm-bgcolor-8 tm-border-rounded">
+            <h3>U bent niet gedetecteerd als een deelnemer van het onderzoek. Als u geen e-mail heeft ontvangen wordt over u geen data verzameld</h3>
+            <p>Als u een e-mail toch heeft ontvangen kopier en plak hier de symbolen na de laatste "/" in de link</p>
+
+        </section>
+
+        <section class=" tm-flex-center tm-mb-50 tm-p-50 tm-bgcolor-5 tm-border-rounded">
+            <h3>Voorbeeld</h3>
+            
+            <p class="steps-explanation">https://phishing-awareness-website.onrender.com/Email/<span style="color: red;">zrlS2zAESu_FfyoVo-w1Dg==</span></p>
+            
+            <p>Het in rood gemarkeerde gedeelte moet u kopiëren als u uw data wilt wissen.</p>
+            <input type="text" id="symbolInput" placeholder="Voer de symbolen hier in" />
+    
+            <!-- Submit button -->
+            <button class="github-button submit_string_button" onclick="submitSymbols()">Verzend</button>
+        </section>
+        {% endif %}
+
+    </div>
+    
+</body>

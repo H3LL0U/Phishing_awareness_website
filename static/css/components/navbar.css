@@ -86,7 +86,7 @@ nav a:hover::before {
 }
 
 
-@media (max-width: 777px) {
+@media (max-width: 1001px) {
     /* Center the logo */
     #logo {
         display: flex;
