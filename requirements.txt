@@ -8,7 +8,7 @@ colorama==0.4.6
 cryptography==43.0.1
 disposable-email-domains==0.0.105
 dnspython==2.6.1
-EmailSenderPy @ git+https://github.com/H3LL0U/EmailPy.git@dfdc4208bd3bce339cc566fa253f609731cea616
+EmailSenderPy @ git+https://github.com/H3LL0U/EmailPy.git@94581095388c11a1ee89e6b2fc6f73772a12df2f
 filelock==3.16.0
 Flask==3.0.3
 gunicorn==23.0.0

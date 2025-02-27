@@ -225,8 +225,21 @@ def validate_user():
     except Exception:
         return jsonify({"Error": "Wrong request"}),400
         
-
-
+@app.route("/api/validate_user_with_cookie", methods=["POST"])
+def validate_user_with_cookie():
+    try:
+        try:
+            user = request.json["user"]
+            user = encrypt_value(user)
+        except KeyError:
+            return jsonify({"Error": "Wrong request format"}), 400
+        return jsonify({"response":user == request.cookies.get("login")}),200
+    except KeyboardInterrupt:
+        raise KeyboardInterrupt
+    except Exception as e:
+        
+        return jsonify({"Error": "Wrong request"}),400
+        
 if __name__ =="__main__":
     
 

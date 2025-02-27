@@ -7,48 +7,72 @@
     <title>Login Page</title>
     <link rel="shortcut icon" , href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" , type="text/css" , href="{{ url_for('static', filename='css/login2.css') }}">
+    
+    <script src="{{ url_for('static', filename='js/login/validate.js') }}"></script> <!--script for data collection-->
     <script>
-        function checkPassword(event) {
-            const passwordInput = event.target.value;
-            if (passwordInput) {
-                window.location.href = '/typed';
-            }
-        }
+
     </script>
 </head>
 
 <body>
-
-    <div class="sign-in-box">
-        <img src="{{ url_for('static', filename='images/km/bannerlogo.png') }}" alt="Logo" class="banner-logo">
-
-        <div class="identity-banner">
-            <button class="backButton">
-                <img src="https://aadcdn.msauth.net/shared/1.0/content/images/arrow_left_43280e0ba671a1d8b5e34f1931c4fe4b.svg"
-                    alt="terug">
-            </button>
-            <div class="identity">{{username}}</div>
+    <div class="sign-in-box-area" id="login-area">
+        <!-- Password Submit -->
+        <div class="sign-in-box-container" id="password-box" style="display: none;" >
+            <div class="sign-in-box">
+                <img src="{{ url_for('static', filename='images/km/bannerlogo.png') }}" alt="Logo" class="banner-logo">
+    
+                <div class="identity-banner">
+                    <button class="backButton" id="backButton">
+                        <img src="https://aadcdn.msauth.net/shared/1.0/content/images/arrow_left_43280e0ba671a1d8b5e34f1931c4fe4b.svg"
+                            alt="terug">
+                    </button>
+                    <div class="identity">{{username}}</div>
+                </div>
+    
+                <div class="title">Wachtwoord invoeren</div>
+    
+                <form id="password-form">
+                    <div class="form-group">
+                        <input type="password" name="passwd" class="input" placeholder="Wachtwoord" 
+                            aria-label="Typ jouw wachtwoord hier" required maxlength="1" oninput="checkPassword(event)">
+                    </div>
+                    <div class="button-container">
+                        <a>Wachtwoord vergeten</a>
+                        <input type="submit" class="button" value="Aanmelden">
+                    </div>
+                </form>
+            </div>
+            <div class="boilerplate-text">
+                Samen leren, samen werken en samen leven binnen Openbaar Onderwijs Groningen.
+            </div>
         </div>
-
-        <div class="title">Wachtwoord invoeren</div>
-
-        <form method="get">
-            <div onsubmit="event.preventDefault();" class="form-group">
-                <input type="password" name="passwd" class="input" placeholder="Wachtwoord"
-                    aria-label="Typ jouw wachtwoord hier" required oninput="checkPassword(event)" maxlength="1">
+    
+        <!-- Email Submit -->
+        <div class="sign-in-box-container" id="email-box">
+            <div class="sign-in-box">
+                <img src="{{ url_for('static', filename='images/km/bannerlogo.png') }}" alt="Logo" class="banner-logo">
+    
+                <div class="title email-title">Aanmelden</div>
+                <p class="email-subtitle">Doorgaan naar O2G2</p>
+                <div class="error-message" id="error-message">Kan het account met deze gebruikersnaam niet vinden. Voer een andere gebruikersnaam in.</div>
+                <form id="email-form">
+                    <div class="form-group">
+                        <input type="email" name="email" id="email-input" class="input" placeholder="E-mailadres"
+                            aria-label="Typ jouw e-mailadres hier" required maxlength="200">
+                    </div>
+                    <div class="button-container">
+                        <p style="float: left; margin-top: 0px; margin-right: 2px;">Geen account? </p>
+                        <a>Maak nu een account</a>
+                        <input type="submit" class="button" value="Volgende">
+                    </div>
+                </form>
             </div>
-            <div class="button-container">
-                <input type="submit" class="button" value="aanmelden">
+            <div class="boilerplate-text">
+                Samen leren, samen werken en samen leven binnen Openbaar Onderwijs Groningen.
             </div>
-        </form>
-
-
-
-        <div class="boilerplate-text">
-            Samen leren, samen werken en samen leven binnen Openbaar Onderwijs Groningen.
         </div>
     </div>
-
+    <script src="{{ url_for('static', filename='js/login/animations.js') }}"></script> <!--animations for the login field-->
 </body>
 
 </html>
