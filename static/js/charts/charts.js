@@ -52,7 +52,7 @@ async function getDataFromAPI(link) {
     not_visited = total_users - visited;
     trafic_data = visit_data["visit_trafic"]
     email_trafic_data = sent_email_data["email_trafic"]
-    alert(typed_email)
+    
     google.charts.setOnLoadCallback(drawCharts);
 })();
 
