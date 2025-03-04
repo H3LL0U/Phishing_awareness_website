@@ -9,7 +9,8 @@ var visit_data;
 
 var total_users; 
 var typed;
-var visited ;
+var visited;
+var typed_email;
 var not_visited;
 
 var trafic_data;
@@ -40,13 +41,18 @@ async function getDataFromAPI(link) {
 (async function() {
     visit_data = await getDataFromAPI("/api/visit_data");
     sent_email_data =  await getDataFromAPI("/api/email_data")
+    //raw data
     total_users = visit_data["total_users"]; 
     typed = visit_data["typed"]
-    visited = visit_data["visited"] - typed;
-    not_visited = total_users - (typed + visited);
+    typed_email = visit_data["typed_email"]
+    visited = visit_data["visited"]
+    //processed into subcategories
+    visited_without_action = visited - (typed_email)
+    just_typed_email = typed_email - typed
+    not_visited = total_users - visited;
     trafic_data = visit_data["visit_trafic"]
     email_trafic_data = sent_email_data["email_trafic"]
-    
+    alert(typed_email)
     google.charts.setOnLoadCallback(drawCharts);
 })();
 
@@ -60,10 +66,10 @@ function drawTraficChart(){
     var pieDataArray = [['Gebruiker status', 'Aantal gebruikers']];
 
     // Only add non-zero values to the chart
-    if (visited > 0) pieDataArray.push(['Bezocht zonder typen', visited]);
+    if (visited_without_action > 0) pieDataArray.push(['Bezocht zonder typen', visited_without_action]);
     if (not_visited > 0) pieDataArray.push(['Niet Bezocht', not_visited]);
     if (typed > 0) pieDataArray.push(['Bezocht en begon te typen in het wachtwoord veld', typed]);
-
+    if (just_typed_email > 0) pieDataArray.push(['Bezocht en heeft alleen de email ingevoerd', just_typed_email]);
     var pieData = google.visualization.arrayToDataTable(pieDataArray);
 
     var pieOptions = {

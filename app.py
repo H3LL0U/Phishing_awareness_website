@@ -160,6 +160,7 @@ def api_visit_data():
         response = dict()
         response["visited"] = get_visited_ammount(connection_db)
         response["typed"] = len(get_documents_by_query(connection_db,{"started_typing":True}))
+        response["typed_email"] = len(get_documents_by_query(connection_db,{"started_typing_email":True}))
         response["total_users"] = get_ammount_documents(connection_db)
         response["visit_trafic"] = visited_users
         
@@ -191,19 +192,19 @@ def api_email_data():
 @app.route("/api/remove_user", methods = ["POST"])
 def remove_user():
     try:
-        try:
-            user = str(request.json["user"])
-        except KeyError:
-            return jsonify({"Error": "Wrong request format"}),400
         
-        decrypted_user = decrypt_value(user)
+        user = str(request.json["user"])
+
+        
+        
         delte_result = delete_document_by_email(mongo_client=connection_db,
-                                 email=decrypted_user)
+                                 email=user)
         if delte_result and delte_result.deleted_count ==1:
             return jsonify({"Success": "User removed"}), 200
+        
 
-
-
+    except KeyError:
+        return jsonify({"Error": "Wrong request format"}),400
     except KeyboardInterrupt:
         raise KeyboardInterrupt
     except Exception as e:
@@ -213,29 +214,40 @@ def remove_user():
 @app.route("/api/validate_user",methods = ["POST"])
 def validate_user():
     try:
-        try:
-            user = request.json["user"]
-        except KeyError:
-            return jsonify({"Error": "Wrong request format"}), 400
+        
+        user = request.json["user"]
+
         if get_email_properties(mongo_client=connection_db,email=user):
             return jsonify({"response":True}),200
         return jsonify({"response":False}),200
+    except KeyError:
+        return jsonify({"Error": "Wrong request format"}), 400
     except KeyboardInterrupt:
-        raise KeyboardInterrupt
+        raise KeyboardInterrupt()
     except Exception:
         return jsonify({"Error": "Wrong request"}),400
         
 @app.route("/api/validate_user_with_cookie", methods=["POST"])
 def validate_user_with_cookie():
     try:
-        try:
-            user = request.json["user"]
-            user = encrypt_value(user)
-        except KeyError:
-            return jsonify({"Error": "Wrong request format"}), 400
-        return jsonify({"response":user == request.cookies.get("login")}),200
+        
+            
+        user = request.json["user"]
+        if not isinstance(user,str):
+            raise ValueError()
+            
+        user = encrypt_value(user)
+        check_status = user == request.cookies.get("login")
+        update_db = "update_db" in request.json and request.json["update_db"] is True
+        if update_db and check_status:
+            add_property_to_documents(connection_db,"started_typing_email",True,filter_query={"email":user})
+            
+        return jsonify({"response":check_status}),200
+    except KeyError:
+        return jsonify({"Error": "Wrong request format"}), 400
+        
     except KeyboardInterrupt:
-        raise KeyboardInterrupt
+        raise KeyboardInterrupt()
     except Exception as e:
         
         return jsonify({"Error": "Wrong request"}),400

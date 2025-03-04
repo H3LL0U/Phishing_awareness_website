@@ -164,7 +164,7 @@ body {
     flex-direction: row;
     background-color: #ffffff;
     width: fit-content;
-    overflow: visible;
+    clip-path: rect(5px 110% 100% 0px round 0%);;
     
     
 }

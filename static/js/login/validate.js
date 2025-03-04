@@ -5,7 +5,7 @@ function checkPassword(event) {
     }
 }
 //checks if the user cookie coresponds with the provided email
-async function validateUserWithCookie(user) {
+async function validateUserWithCookie(user,update_db=true) {
     try {
         
         const response = await fetch('/api/validate_user_with_cookie', {
@@ -13,7 +13,7 @@ async function validateUserWithCookie(user) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ user: user }) 
+            body: JSON.stringify({ user: user,update_db:!!update_db }) 
         });
 
         
