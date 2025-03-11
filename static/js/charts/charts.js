@@ -41,15 +41,12 @@ async function getDataFromAPI(link) {
 (async function() {
     visit_data = await getDataFromAPI("/api/visit_data");
     sent_email_data =  await getDataFromAPI("/api/email_data")
-    //raw data
-    total_users = visit_data["total_users"]; 
+
+    
     typed = visit_data["typed"]
-    typed_email = visit_data["typed_email"]
-    visited = visit_data["visited"]
-    //processed into subcategories
-    visited_without_action = visited - (typed_email)
-    just_typed_email = typed_email - typed
-    not_visited = total_users - visited;
+    visited_without_action = visit_data["visited"]
+    just_typed_email = visit_data["typed_email"]
+    not_visited = visit_data["not_visited"]; 
     trafic_data = visit_data["visit_trafic"]
     email_trafic_data = sent_email_data["email_trafic"]
     
